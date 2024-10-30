@@ -8,11 +8,14 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   GestureResponderEvent,
+  ActivityIndicator,
 } from "react-native";
+import sendMail from "../../utils/sendMail";
 
 const Password = () => {
   const [email, setEmail] = useState("");
   const [errorEmail, setErrorEmail] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleEmail = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
@@ -25,7 +28,7 @@ const Password = () => {
     }
   };
 
-  const handleContinue = (e: GestureResponderEvent) => {
+  const handleContinue = async (e: GestureResponderEvent) => {
     e.preventDefault();
     const validate = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 
@@ -33,7 +36,17 @@ const Password = () => {
       setErrorEmail(true);
     } else {
       setErrorEmail(false);
-      console.log("Emaaaail");
+      setLoading(true);
+
+      const result = await sendMail(email);
+
+      if (result.success) {
+        setEmail("");
+      } else {
+        console.log("Error al enviar el correo");
+      }
+
+      setLoading(false);
     }
 
     //router.push('/Home/home');
@@ -64,43 +77,48 @@ const Password = () => {
         placeholderTextColor="black"
         keyboardType="email-address" //Input tipo email
         autoCapitalize="none" //Evitamos mayusculas automaticas
+        value={email}
         onChange={handleEmail}
       />
 
-      <View style={styles.buttonCont}>
-        <Button
-          title={"Enviar"}
-          titleStyle={{ fontWeight: "bold", fontSize: 18, color: "black" }}
-          linearGradientProps={{
-            colors: ["#FF9800", "#F44336"],
-            start: [1, 0],
-            end: [0.2, 0],
-          }}
-          buttonStyle={{
-            borderWidth: 0,
-            borderColor: "transparent",
-            borderRadius: 20,
-          }}
-          containerStyle={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            width: 200,
-            marginVertical: 50,
-          }}
-          icon={{
-            name: "arrow-right",
-            type: "font-awesome",
-            size: 15,
-            color: "white",
-          }}
-          iconRight
-          iconContainerStyle={{ marginLeft: 10, marginRight: -10 }}
-          disabled={!email ? true : false}
-          disabledStyle={{ backgroundColor: "#b8f4fd" }}
-          onPress={handleContinue}
-        />
-      </View>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <View style={styles.buttonCont}>
+          <Button
+            title={"Enviar"}
+            titleStyle={{ fontWeight: "bold", fontSize: 18, color: "black" }}
+            linearGradientProps={{
+              colors: ["#FF9800", "#F44336"],
+              start: [1, 0],
+              end: [0.2, 0],
+            }}
+            buttonStyle={{
+              borderWidth: 0,
+              borderColor: "transparent",
+              borderRadius: 20,
+            }}
+            containerStyle={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              width: 200,
+              marginVertical: 50,
+            }}
+            icon={{
+              name: "arrow-right",
+              type: "font-awesome",
+              size: 15,
+              color: "white",
+            }}
+            iconRight
+            iconContainerStyle={{ marginLeft: 10, marginRight: -10 }}
+            disabled={!email ? true : false}
+            disabledStyle={{ backgroundColor: "#b8f4fd" }}
+            onPress={handleContinue}
+          />
+        </View>
+      )}
     </View>
   );
 };
