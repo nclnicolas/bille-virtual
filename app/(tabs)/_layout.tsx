@@ -62,22 +62,30 @@ const HomeTabs = () => {
           },
         }}
       />
-      {/* <Tabs.Screen
-        name="compra/carrito"
+      <Tabs.Screen
+        name="Registro/registro"
         options={{
-          title: "Carrito",
-          tabBarIcon({ focused }) {
-            return <Icon name="cart" size={30} />;
+          href: null,
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#15a6bd",
+          },
+          headerLeft: () =>(
+            <Icon 
+              name="arrow-back"
+              size={30}
+              color='#b8f4fd'
+              style={{marginLeft: 10}}
+              onPress={() => router.back()}
+            />
+          ),
+          tabBarStyle: {
+            backgroundColor: "#15a6bd",
+            borderTopWidth: 0,
           },
         }}
       />
-      <Tabs.Screen
-        name="success/Success"
-        options={{
-          title: "Exito",
-          href: null,
-        }}
-      /> */}
     </Tabs>
   );
 };

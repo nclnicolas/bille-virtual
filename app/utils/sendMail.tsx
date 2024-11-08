@@ -1,4 +1,4 @@
-const sendMail = async (email: any) => {
+const sendMail = async (email: string) => {
   try {
     const response = await fetch("http://192.168.0.19:8080/send-email", {
       method: "POST",
