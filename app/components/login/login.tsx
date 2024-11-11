@@ -21,7 +21,7 @@ const Login = () => {
   const [errorPass, setErrorPass] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const [data, setData] = useState<UsuariosResponse>();
+  const [data, setData] = useState<UsuariosResponse | null>(null);
 
   const router = useRouter();
 
@@ -34,43 +34,32 @@ const Login = () => {
     fetchData();
   }, []);
 
-  const dataEmail = data?.allUsuarios.map((item) => item.email);
-  const dataPass = data?.allUsuarios.map((item) => item.pass);
-
   const handleUser = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
     setUser(value);
-
-    if (!value) {
-      setErrorUser(true);
-    } else {
-      setErrorUser(false);
-    }
+    setErrorUser(!value);
   };
 
   const handlePass = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
     setPass(value);
-
-    if (!value) {
-      setErrorPass(true);
-    } else {
-      setErrorPass(false);
-    }
+    setErrorPass(!value);
   };
 
-  const handleContinue = (e: GestureResponderEvent) => {
+  const handleContinue = async (e: GestureResponderEvent) => {
     e.preventDefault();
 
-    const verifyEmail = dataEmail?.some((em) => em === user);
-    const verifyPass = dataPass?.some((pas) => pas === pass);
+    const userExist = data?.allUsuarios.some(
+      (usuario) => usuario.email === user && usuario.pass === pass
+    );
 
-    if (verifyEmail && verifyPass) {
+    if (userExist) {
       setErrorPass(false);
       setErrorUser(false);
-      setUser('');
-      setPass('');
-      console.log("Ingreso correcto");
+      setUser("");
+      setPass("");
+
+      router.push("Home/home");
     } else {
       setErrorPass(true);
       setErrorUser(true);
@@ -93,7 +82,7 @@ const Login = () => {
           nameIcon={"person"}
           valueInput={user}
           label={"Usuario"}
-          typeInput={'email-address'}
+          typeInput={"email-address"}
           placeHolder={"Ingrese Su Usuario"}
           handleFunction={handleUser}
         />

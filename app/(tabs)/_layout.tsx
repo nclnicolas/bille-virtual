@@ -1,10 +1,13 @@
-import { Tabs, useRouter } from "expo-router";
-import { Icon } from "@rneui/themed";
-import { Image, View, Text } from "react-native";
+import { Tabs, usePathname, useRouter } from "expo-router";
+import { Icon } from "@rneui/base";
+import { TouchableOpacity } from "react-native";
+import HeaderComponent from "../components/headerComponent";
 
 const HomeTabs = () => {
-
   const router = useRouter();
+  const pathname = usePathname();
+  console.log("path", pathname);
+
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -47,12 +50,12 @@ const HomeTabs = () => {
           headerStyle: {
             backgroundColor: "#15a6bd",
           },
-          headerLeft: () =>(
-            <Icon 
+          headerLeft: () => (
+            <Icon
               name="arrow-back"
               size={30}
-              color='#b8f4fd'
-              style={{marginLeft: 10}}
+              color="#b8f4fd"
+              style={{ marginLeft: 10 }}
               onPress={() => router.back()}
             />
           ),
@@ -71,12 +74,12 @@ const HomeTabs = () => {
           headerStyle: {
             backgroundColor: "#15a6bd",
           },
-          headerLeft: () =>(
-            <Icon 
+          headerLeft: () => (
+            <Icon
               name="arrow-back"
               size={30}
-              color='#b8f4fd'
-              style={{marginLeft: 10}}
+              color="#b8f4fd"
+              style={{ marginLeft: 10 }}
               onPress={() => router.back()}
             />
           ),
@@ -84,6 +87,59 @@ const HomeTabs = () => {
             backgroundColor: "#15a6bd",
             borderTopWidth: 0,
           },
+        }}
+      />
+
+      <Tabs.Screen
+        name="Home/home"
+        options={{
+          title: 'Home',
+          //headerTitle: () => <HeaderComponent title='Vink'/>,
+          headerShown: false, //Ocultamos el header
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#15a6bd",
+          },
+          tabBarStyle: {
+            backgroundColor: "#15a6bd",
+            borderTopWidth: 0,
+          },
+          tabBarIcon({ focused }) {
+            return <Icon name="home" />;
+          },
+          tabBarButton: (
+            props //permite mostrar el tab solo si estamos en esta pestaña
+          ) =>
+            pathname !== "/" &&
+            pathname !== "/Password/password" &&
+            pathname !== "/Registro/registro" ? (
+              <TouchableOpacity {...props} />
+            ) : null,
+        }}
+      />
+      <Tabs.Screen
+        name="Beneficios/beneficios"
+        options={{
+          title: "Beneficios",
+          //headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#15a6bd",
+          },
+          tabBarStyle: {
+            backgroundColor: "#15a6bd",
+            borderTopWidth: 0,
+          },
+          tabBarIcon({ focused }) {
+            return <Icon name="home" />;
+          },
+          tabBarButton: (
+            props //permite mostrar el tab solo si estamos en esta pestaña
+          ) =>
+            pathname !== "/" &&
+            pathname !== "/Password/password" &&
+            pathname !== "/Registro/registro" ? (
+              <TouchableOpacity {...props} />
+            ) : null,
         }}
       />
     </Tabs>
