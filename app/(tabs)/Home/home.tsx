@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Text, StyleSheet, View, Alert, TouchableOpacity } from "react-native";
 import { Avatar } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
+import { useUsuarios } from "../../context/UsuariosContext";
 
 const Home = () => {
   const [avatarUri, setAvatarUri] = useState(
-    "https://randomuser.me/api/portraits/men/36.jpg"
+    "https://uifaces.co/our-content/donated/6MWH9Xi_.jpg"
   );
+
+  const { allUsuarios } = useUsuarios();
 
   const pickImage = async () => {
     const permissionResult =
@@ -40,10 +43,13 @@ const Home = () => {
           <Avatar
             size={64}
             rounded
-            source={{ uri: avatarUri}}
+            icon={{ name: "" }}
+            source={{ uri: avatarUri }}
             key={`1`}
           />
         </TouchableOpacity>
+
+        <Text>Bienvenido Usuario</Text>
       </View>
     </View>
   );
@@ -59,6 +65,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   avatar: {
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 5,
   },
 });

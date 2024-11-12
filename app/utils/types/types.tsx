@@ -5,6 +5,7 @@ export interface Usuario {
     fechaNac: string;
     nombre: string;
     pass: string;
+    avatar: string;
     uid: string;
   }
   

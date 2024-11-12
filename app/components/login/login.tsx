@@ -13,26 +13,15 @@ import { Button } from "@rneui/base";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import Inputs from "../inputs";
-import { useGetData } from "../../utils/hooks/useGetData";
 import { UsuariosResponse } from "../../utils/types/types";
 
-const Login = () => {
+const Login = ({ allUsuarios }: UsuariosResponse) => {
   const [errorUser, setErrorUser] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const [data, setData] = useState<UsuariosResponse | null>(null);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const resData = await useGetData();
-      setData(resData);
-    };
-
-    fetchData();
-  }, []);
 
   const handleUser = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
@@ -49,7 +38,7 @@ const Login = () => {
   const handleContinue = async (e: GestureResponderEvent) => {
     e.preventDefault();
 
-    const userExist = data?.allUsuarios.some(
+    const userExist = allUsuarios?.some(
       (usuario) => usuario.email === user && usuario.pass === pass
     );
 
