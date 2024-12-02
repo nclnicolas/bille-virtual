@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Usuario {
     apellido: string;
     dni: number;
@@ -12,3 +14,8 @@ export interface Usuario {
 export interface UsuariosResponse {
     allUsuarios: Usuario[];
   }
+
+export interface TypeUsuarioContext{
+  allUsuarios: Usuario[];
+  setCurrentUser: Dispatch<SetStateAction<Usuario | null>>
+}

@@ -13,9 +13,9 @@ import { Button } from "@rneui/base";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import Inputs from "../inputs";
-import { UsuariosResponse } from "../../utils/types/types";
+import { TypeUsuarioContext } from "../../utils/types/types";
 
-const Login = ({ allUsuarios }: UsuariosResponse) => {
+const Login = ({ allUsuarios, setCurrentUser }: TypeUsuarioContext) => {
   const [errorUser, setErrorUser] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
   const [user, setUser] = useState("");
@@ -38,7 +38,7 @@ const Login = ({ allUsuarios }: UsuariosResponse) => {
   const handleContinue = async (e: GestureResponderEvent) => {
     e.preventDefault();
 
-    const userExist = allUsuarios?.some(
+    const userExist = allUsuarios?.find(
       (usuario) => usuario.email === user && usuario.pass === pass
     );
 
@@ -48,6 +48,7 @@ const Login = ({ allUsuarios }: UsuariosResponse) => {
       setUser("");
       setPass("");
 
+      setCurrentUser(userExist);
       router.push("Home/home");
     } else {
       setErrorPass(true);

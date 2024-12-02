@@ -1,4 +1,4 @@
-export async function useGetData() {
+export default async function useGetData() {
   try {
     const response = await fetch("http://192.168.0.19:8080/datos/usuarios");
 

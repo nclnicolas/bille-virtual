@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Tabs, usePathname, useRouter } from "expo-router";
 import { Icon } from "@rneui/base";
 import { TouchableOpacity } from "react-native";
-import { useGetData } from "../utils/hooks/useGetData";
 import UsuariosContext from "../context/UsuariosContext";
+import { Usuario } from "../utils/types/types";
+import useGetData from "../utils/hooks/useGetData";
 
 const HomeTabs = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const [allUsuarios, setAllUsuarios] = useState([]);
+  const [allUsuarios, setAllUsuarios] = useState<Usuario[]>([]);
+  const [currentUser, setCurrentUser] = useState<Usuario | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +26,9 @@ const HomeTabs = () => {
   }, []);
 
   return (
-    <UsuariosContext.Provider value={{ allUsuarios }}>
+    <UsuariosContext.Provider
+      value={{ allUsuarios, currentUser, setCurrentUser }}
+    >
       <Tabs
         screenOptions={({ route }) => ({
           tabBarStyle: {
@@ -51,10 +55,6 @@ const HomeTabs = () => {
             headerTitleAlign: "center",
             headerShadowVisible: false,
             tabBarInactiveTintColor: "",
-            tabBarStyle: {
-              backgroundColor: "#15a6bd",
-              borderTopWidth: 0,
-            },
           }}
         />
         <Tabs.Screen
@@ -75,10 +75,6 @@ const HomeTabs = () => {
                 onPress={() => router.back()}
               />
             ),
-            tabBarStyle: {
-              backgroundColor: "#15a6bd",
-              borderTopWidth: 0,
-            },
           }}
         />
         <Tabs.Screen
@@ -99,10 +95,6 @@ const HomeTabs = () => {
                 onPress={() => router.back()}
               />
             ),
-            tabBarStyle: {
-              backgroundColor: "#15a6bd",
-              borderTopWidth: 0,
-            },
           }}
         />
 
@@ -120,18 +112,23 @@ const HomeTabs = () => {
             tabBarStyle: {
               backgroundColor: "#15a6bd",
               borderTopWidth: 0,
+              height: 60,
             },
             tabBarIcon({ focused }) {
               return <Icon name="home" />;
             },
             tabBarButton: (
               props //permite mostrar el tab solo si estamos en esta pestaña
-            ) =>
-              pathname !== "/" &&
-              pathname !== "/Password/password" &&
-              pathname !== "/Registro/registro" ? (
-                <TouchableOpacity {...props} />
-              ) : null,
+            ) => {
+              if (
+                pathname !== "/" &&
+                pathname !== "/Password/password" &&
+                pathname !== "/Registro/registro"
+              ) {
+                return <TouchableOpacity {...props}  />;
+              }
+              return null;
+            },
           }}
         />
         <Tabs.Screen
@@ -145,6 +142,7 @@ const HomeTabs = () => {
             tabBarStyle: {
               backgroundColor: "#15a6bd",
               borderTopWidth: 0,
+              height: 60,
             },
             tabBarIcon({ focused }) {
               return <Icon name="home" />;
@@ -157,6 +155,7 @@ const HomeTabs = () => {
               pathname !== "/Registro/registro" ? (
                 <TouchableOpacity {...props} />
               ) : null,
+              
           }}
         />
       </Tabs>

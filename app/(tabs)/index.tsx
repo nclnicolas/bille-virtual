@@ -3,7 +3,7 @@ import Login from "../components/login/login";
 import { useUsuarios } from "../context/UsuariosContext";
 
 export default function App() {
-  const { allUsuarios } = useUsuarios();
+  const { allUsuarios, setCurrentUser } = useUsuarios();
 
-  return <Login allUsuarios={allUsuarios} />;
+  return <Login allUsuarios={allUsuarios} setCurrentUser={setCurrentUser} />;
 }
