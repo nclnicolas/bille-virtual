@@ -19,3 +19,7 @@ export interface TypeUsuarioContext{
   allUsuarios: Usuario[];
   setCurrentUser: Dispatch<SetStateAction<Usuario | null>>
 }
+
+export interface HomePageProps{
+  currentUser: Usuario | null;
+}
