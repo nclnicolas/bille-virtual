@@ -35,8 +35,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 5,
+    marginBottom: 5
   },
   text: {
     marginLeft: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15
   },
 });
