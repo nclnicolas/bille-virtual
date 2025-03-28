@@ -1,8 +1,19 @@
 export default async function usePutAvatarUser(
   email: string | undefined,
-  avatar: string | undefined
+  avatar?: string | undefined,
+  saldo?: number | undefined
 ) {
   try {
+    const requestBody: { avatar?: string; saldo?: number } = {};
+
+    if (avatar !== undefined) {
+      requestBody.avatar = avatar;
+    }
+
+    if (saldo !== undefined) {
+      requestBody.saldo = saldo;
+    }
+
     const response = await fetch(
       `http://192.168.0.19:8080/datos/usuarios/${email}`,
       {
@@ -10,9 +21,7 @@ export default async function usePutAvatarUser(
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          avatar,
-        }),
+        body: JSON.stringify(requestBody),
       }
     );
 

@@ -7,12 +7,6 @@ const Carousel = () => {
     <Swiper style={{ height: 200 }} showsPagination loop>
       <View>
         <Image
-          source={require("../../assets/promoOne.jpg")}
-          style={styles.imgCarouser}
-        />
-      </View>
-      <View>
-        <Image
           source={require("../../assets/promoMc.jpg")}
           style={styles.imgCarouser}
         />
@@ -20,6 +14,12 @@ const Carousel = () => {
       <View>
         <Image
           source={require("../../assets/promoCarrefour.jpg")}
+          style={styles.imgCarouser}
+        />
+      </View>
+      <View>
+        <Image
+          source={require("../../assets/promoOne.jpg")}
           style={styles.imgCarouser}
         />
       </View>

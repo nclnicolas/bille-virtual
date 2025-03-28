@@ -39,6 +39,10 @@ const homePage: React.FC<HomePageProps> = ({ currentUser }) => {
     router.push(url);
   };
 
+  const handleMoney = () => {
+    router.push('/DepositMoney/depositMoney')
+  }
+
   return (
     <>
       <ScrollView>
@@ -49,9 +53,7 @@ const homePage: React.FC<HomePageProps> = ({ currentUser }) => {
           info={[`Alias: ${alias}`, `CVU: ${cvu}`]}
           button={{
             title: "Ingresar Dinero",
-            onPress: () => {
-              console.log("Hola");
-            },
+            onPress: () => handleMoney()
           }}
         />
 

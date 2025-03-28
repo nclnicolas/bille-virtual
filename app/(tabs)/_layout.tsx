@@ -158,6 +158,31 @@ const HomeTabs = () => {
               
           }}
         />
+        <Tabs.Screen
+          name="DepositMoney/depositMoney"
+          options={{
+            href: null,
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: "#15a6bd",
+            },
+            tabBarStyle: {
+              backgroundColor: "#15a6bd",
+              borderTopWidth: 0,
+              height: 60,
+            },
+            headerLeft: () => (
+              <Icon
+                name="arrow-back"
+                size={30}
+                color="#b8f4fd"
+                style={{ marginLeft: 10 }}
+                onPress={() => router.push('/Home/home')}
+              />
+            ),
+          }}
+        />
       </Tabs>
     </UsuariosContext.Provider>
   );
