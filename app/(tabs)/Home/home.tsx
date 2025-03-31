@@ -5,7 +5,7 @@ import { useUsuarios } from "../../context/UsuariosContext";
 import HomePage from "../../components/homePage/homePage";
 
 const Home = () => {
-  const { currentUser } = useUsuarios();
+  const { currentUser, setCurrentUser, refetchUsuarios } = useUsuarios();
 
   return (
     <>
@@ -16,7 +16,11 @@ const Home = () => {
           <Text style={styles.text}>Bienvenido {currentUser?.nombre}</Text>
         </View>
 
-        <HomePage currentUser={currentUser} />
+        <HomePage
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          refetchUsuarios={refetchUsuarios}
+        />
       </View>
     </>
   );
@@ -35,12 +39,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   text: {
     marginLeft: 20,
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 15
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });

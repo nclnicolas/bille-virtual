@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, View, ScrollView, Button } from "react-native";
 import { useUsuarios } from "../../context/UsuariosContext";
-import { lightColors, PricingCard } from "@rneui/themed";
-import { Input } from "@rneui/base";
 import DepositMoneyComponent from "../../components/depositMoney/depositMoneyComponent";
 
 const DepositMoney = () => {
-  const { currentUser } = useUsuarios();
+  const { currentUser, setCurrentUser, refetchUsuarios } = useUsuarios();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Elegi como queres ingresar dinero</Text>
+      <Text style={styles.title}>Ingresa dinero de forma rapida...</Text>
 
-      <DepositMoneyComponent currentUser={currentUser} />
+      <DepositMoneyComponent
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        refetchUsuarios={refetchUsuarios}
+      />
     </View>
   );
 };

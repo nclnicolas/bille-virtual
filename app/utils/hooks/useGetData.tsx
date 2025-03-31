@@ -1,15 +1,35 @@
-export default async function useGetData() {
-  try {
-    const response = await fetch("http://192.168.0.19:8080/datos/usuarios");
+import { useEffect, useState } from "react";
 
-    if (response.ok) {
-      const resData = await response.json();
-      return resData;
-    } else {
-      return { success: false, message: "Error en get" };
+const useGetData = () => {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchUsuarios = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://192.168.0.19:8080/datos/usuarios");
+
+      if (response.ok) {
+        const resData = await response.json();
+        setUsuarios(resData?.allUsuarios || []);
+        setError(null);
+      } else {
+        setError("Error en la peticion GETUSUARIOS");
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Error en la conexion");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.log(error);
-    return { success: false, message: "Error en get" };
-  }
-}
+  };
+
+  useEffect(() => {
+    fetchUsuarios();
+  }, []);
+
+  return { usuarios, loading, error, refetch: fetchUsuarios };
+};
+
+export default useGetData;

@@ -9,25 +9,22 @@ import useGetData from "../utils/hooks/useGetData";
 const HomeTabs = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { usuarios, refetch } = useGetData();
   const [allUsuarios, setAllUsuarios] = useState<Usuario[]>([]);
   const [currentUser, setCurrentUser] = useState<Usuario | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resData = await useGetData();
-        setAllUsuarios(resData?.allUsuarios || []);
-      } catch (error) {
-        console.error("Error al obtener los usuarios:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+      setAllUsuarios(usuarios);
+  }, [usuarios]);
 
   return (
     <UsuariosContext.Provider
-      value={{ allUsuarios, currentUser, setCurrentUser }}
+      value={{
+        allUsuarios,
+        currentUser,
+        setCurrentUser,
+        refetchUsuarios: refetch,
+      }}
     >
       <Tabs
         screenOptions={({ route }) => ({
@@ -125,7 +122,7 @@ const HomeTabs = () => {
                 pathname !== "/Password/password" &&
                 pathname !== "/Registro/registro"
               ) {
-                return <TouchableOpacity {...props}  />;
+                return <TouchableOpacity {...props} />;
               }
               return null;
             },
@@ -155,7 +152,6 @@ const HomeTabs = () => {
               pathname !== "/Registro/registro" ? (
                 <TouchableOpacity {...props} />
               ) : null,
-              
           }}
         />
         <Tabs.Screen
@@ -178,7 +174,7 @@ const HomeTabs = () => {
                 size={30}
                 color="#b8f4fd"
                 style={{ marginLeft: 10 }}
-                onPress={() => router.push('/Home/home')}
+                onPress={() => router.push("/Home/home")}
               />
             ),
           }}

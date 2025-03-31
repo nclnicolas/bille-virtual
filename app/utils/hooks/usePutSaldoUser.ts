@@ -1,17 +1,17 @@
-export default async function usePutAvatarUser(
+export default async function usePutDSaldoUser(
   email: string | undefined,
-  avatar: string | undefined
+  saldo: number | undefined
 ) {
   try {
     const response = await fetch(
-      `http://192.168.0.19:8080/datos/usuarios/${email}`,
+      `http://192.168.0.19:8080/usuario/saldos/${email}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          avatar,
+          saldo,
         }),
       }
     );

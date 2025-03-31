@@ -9,6 +9,7 @@ export interface Usuario {
     pass: string;
     avatar: string;
     uid: string;
+    saldo: number;
   }
   
 export interface UsuariosResponse {
@@ -22,4 +23,6 @@ export interface TypeUsuarioContext{
 
 export interface HomePageProps{
   currentUser: Usuario | null;
+  setCurrentUser: Dispatch<SetStateAction<Usuario | null>>;
+  refetchUsuarios: any;
 }

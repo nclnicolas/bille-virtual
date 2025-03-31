@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
 import {
   PricingCard,
@@ -16,8 +16,13 @@ type IconData = {
   url: string;
 };
 
-const homePage: React.FC<HomePageProps> = ({ currentUser }) => {
+const homePage: React.FC<HomePageProps> = ({
+  currentUser,
+  setCurrentUser,
+  refetchUsuarios,
+}) => {
   const router = useRouter();
+
   const alias = `${currentUser?.nombre}.${currentUser?.dni}.vink`;
   const cvu = "0001234567891011223344";
 
@@ -40,8 +45,8 @@ const homePage: React.FC<HomePageProps> = ({ currentUser }) => {
   };
 
   const handleMoney = () => {
-    router.push('/DepositMoney/depositMoney')
-  }
+    router.push("/DepositMoney/depositMoney");
+  };
 
   return (
     <>
@@ -49,11 +54,11 @@ const homePage: React.FC<HomePageProps> = ({ currentUser }) => {
         <PricingCard
           color={lightColors.primary}
           title="Tu Cuenta"
-          price="$10.000,00"
+          price={`$${currentUser?.saldo.toFixed(2)}`}
           info={[`Alias: ${alias}`, `CVU: ${cvu}`]}
           button={{
             title: "Ingresar Dinero",
-            onPress: () => handleMoney()
+            onPress: () => handleMoney(),
           }}
         />
 

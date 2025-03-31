@@ -1,16 +1,19 @@
 const sendMail = async (email: string) => {
   try {
-    const response = await fetch("http://192.168.0.19:8080/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: email,
-        subject: "Recuperacion de contraseña!",
-        text: "Este es un mail para recuperar la contraseña",
-      }),
-    });
+    const response = await fetch(
+      "http://192.168.0.19:8080/send-email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to: email,
+          subject: "Recuperacion de contraseña!",
+          text: "Este es un mail para recuperar la contraseña",
+        }),
+      }
+    );
     if (response.ok) {
       return { success: true };
     } else {
