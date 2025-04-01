@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import {
   PricingCard,
   lightColors,
@@ -48,6 +54,23 @@ const homePage: React.FC<HomePageProps> = ({
     router.push("/DepositMoney/depositMoney");
   };
 
+  const handleAvatarButton = (title: string) => {
+    switch (title) {
+      case "Transferir":
+        router.push("/Transfer/transfer");
+        break;
+      case "Prestamo":
+        router.push("/DepositMoney/depositMoney");
+        break;
+      case "Dolar":
+        router.push("/DepositMoney/depositMoney");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <ScrollView>
@@ -65,21 +88,23 @@ const homePage: React.FC<HomePageProps> = ({
         <View style={styles.avatarButton}>
           {avatarButtonText.map((item, index) => (
             <View style={styles.avatarButtonContainer} key={index}>
-              <Avatar
-                size={70}
-                rounded
-                containerStyle={{
-                  borderColor: "orange",
-                  borderStyle: "solid",
-                  borderWidth: 1,
-                }}
-                titleStyle={{ fontSize: 12 }}
-                icon={{
-                  name: item.iconName,
-                  type: "material",
-                  color: "#ff5606",
-                }}
-              />
+              <TouchableOpacity onPress={() => handleAvatarButton(item.title)}>
+                <Avatar
+                  size={70}
+                  rounded
+                  containerStyle={{
+                    borderColor: "orange",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                  }}
+                  titleStyle={{ fontSize: 12 }}
+                  icon={{
+                    name: item.iconName,
+                    type: "material",
+                    color: "#ff5606",
+                  }}
+                />
+              </TouchableOpacity>
               <Text style={styles.avatarButtonText}>{item.title}</Text>
             </View>
           ))}
